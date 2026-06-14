@@ -78,7 +78,7 @@ button {
 
 .texture-bg {
     background:
-        radial-gradient(circle at 20% 20%, rgba(217, 171, 0, 0.09), transparent 28rem),
+        radial-gradient(circle at 20% 20%, rgba(217, 171, 0), transparent 28rem),
         radial-gradient(circle at 90% 80%, rgba(112, 0, 0, 0.08), transparent 22rem),
         var(--cream-100);
 }
@@ -209,8 +209,8 @@ p {
 .brand img {
     position: relative;
     z-index: 1;
-    width: clamp(180px, 20vw, 265px);
-    max-height: 72px;
+    width: clamp(300px, 20vw, 500px);
+    max-height: 96px;
     object-fit: contain;
 }
 
@@ -540,22 +540,59 @@ p {
     align-items: center;
 }
 
-.logo-strip {
+.logo-marquee {
+    overflow: hidden;
+    min-width: 0;
+    -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent,
+        black 12%,
+        black 88%,
+        transparent
+    );
+    mask-image: linear-gradient(
+        90deg,
+        transparent,
+        black 12%,
+        black 88%,
+        transparent
+    );
+}
+
+.logo-track {
+    width: max-content;
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    gap: 1.5rem;
-    min-width: 0;
+    gap: 3rem;
+    animation: logoMarquee 28s linear infinite;
 }
 
-.logo-strip img {
-    max-width: 110px;
-    max-height: 42px;
+.logo-track img {
+    flex: 0 0 auto;
+    width: 120px;
+    max-height: 46px;
     object-fit: contain;
-    filter: grayscale(1) contrast(1.1);
-    opacity: 0.75;
+    opacity: 0.9;
+    transition: transform 0.25s ease;
 }
 
+.logo-track img:hover {
+    transform: scale(1.08);
+}
+
+.logo-marquee:hover .logo-track {
+    animation-play-state: paused;
+}
+
+@keyframes logoMarquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
 /* CONTACT + LOCATION */
 
 .contact-location {
@@ -885,10 +922,9 @@ textarea {
         grid-template-columns: 1fr;
     }
 
-    .logo-strip {
-        flex-wrap: wrap;
-        justify-content: flex-start;
-    }
+    .logo-track {
+    gap: 2rem;
+}
 
     .footer-inner {
         grid-template-columns: 1fr;
@@ -925,7 +961,7 @@ textarea {
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 700px) {
     .brand img {
         width: 175px;
     }
